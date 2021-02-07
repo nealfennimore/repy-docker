@@ -28,4 +28,4 @@ COPY ./docker-entrypoint.sh /usr/local/bin/
 
 WORKDIR /root/repy
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["python", "repy.py"]
+CMD ["python", "repy.py", "--help"]

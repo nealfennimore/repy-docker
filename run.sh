@@ -2,6 +2,6 @@
 
 docker run -it --rm \
     -v "$PWD/src:/root/src" \
-    repy:latest \
+    ghcr.io/nealfennimore/repy \
     python repy.py restrictions.default encasementlib.r2py \
     "$@"

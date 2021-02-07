@@ -63,6 +63,7 @@ jobs:
         run: >-
           docker build .
           --file Dockerfile
+          --tag $IMAGE_NAME
           --cache-from ${{ steps.build.outputs.image_id }}:${{ steps.build.outputs.version }}
           --label "org.opencontainers.image.revision=$GITHUB_SHA"
           --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}"

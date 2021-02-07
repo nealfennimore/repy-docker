@@ -26,7 +26,7 @@ jobs:
       - uses: FranzDiebold/github-env-vars-action@v2
 
       - name: Log into registry
-        run: echo "${{ secrets.READ_WRITE_PACKAGES_PAT }}" | docker login docker.pkg.github.com -u $CI_REPOSITORY_OWNER --password-stdin
+        run: echo "${{ secrets.READ_WRITE_PACKAGES_PAT }}" | docker login containers.pkg.github.com -u $CI_REPOSITORY_OWNER --password-stdin
 
       - name: Set build variables
         id: build

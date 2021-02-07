@@ -13,13 +13,11 @@ docker pull ghcr.io/nealfennimore/repy:latest
 
 ### Running
 
+After installation, the following should return the help menu.
+
 ```sh
 docker run -it --rm ghcr.io/nealfennimore/repy
 ```
-
-### Examples
-
-See [loading source code](examples/loading-source-code)
 
 ### Building Locally
 
@@ -28,3 +26,7 @@ If you need to make changes to the build locally:
 ```sh
 docker build . -t ghcr.io/nealfennimore/repy:latest
 ```
+
+## Examples
+
+See [loading source code](examples/loading-source-code)

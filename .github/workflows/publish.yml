@@ -11,7 +11,7 @@ on:
       - v*
 
 env:
-  IMAGE_NAME: repy2
+  IMAGE_NAME: repy
 
 jobs:
   # Push image to GitHub Packages.
@@ -23,13 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
-
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
+      - name: Set build variables
+        id: build
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -48,5 +46,17 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          echo ::set-output name=image_id::${IMAGE_ID}
+          echo ::set-output name=version::${VERSION}
+
+      - name: Fetch cached image
+        run: >-
+          docker pull docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME:${{ steps.build.outputs.version }} || true
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+
+      - name: Push image
+        run: |
+          docker tag $IMAGE_NAME ${{ steps.build.outputs.image_id }}:${{ steps.build.outputs.version }}
+          docker push ${{ steps.build.outputs.image_id }}:${{ steps.build.outputs.version }}
